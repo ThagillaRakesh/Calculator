@@ -3,11 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/ThagillaRakesh/Calculator'
-            }
-        }
+        
 
         stage('Build & Test') {
             steps {
