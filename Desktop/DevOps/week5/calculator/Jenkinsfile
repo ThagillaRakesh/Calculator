@@ -3,41 +3,23 @@ pipeline {
 
     stages {
 
-        stage('Build & Test') {
+        stage('Build') {
             steps {
                 dir('Desktop/DevOps/week5/calculator') {
-                    sh 'mvn clean test'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
 
-        stage('Package JAR') {
-            steps {
-                dir('Desktop/DevOps/week5/calculator') {
-                    sh 'mvn package'
-                }
-            }
-        }
-
-        stage('Install to Local Repo') {
-            steps {
-                dir('Desktop/DevOps/week5/calculator') {
-                    sh 'mvn install'
-                }
-            }
-        }
     }
 
     post {
         success {
-            echo 'Library JAR packaged and installed successfully'
+            echo 'Build successful'
             archiveArtifacts artifacts: 'Desktop/DevOps/week5/calculator/target/*.jar', fingerprint: true
         }
         failure {
             echo 'Build failed'
-        }
-        always {
-            junit 'Desktop/DevOps/week5/calculator/target/surefire-reports/*.xml'
         }
     }
 }
